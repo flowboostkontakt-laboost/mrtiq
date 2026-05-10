@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.DS_Store
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# Source briefs / referencje (poza repo)
+Strona MRTIQ 05-2026A/
