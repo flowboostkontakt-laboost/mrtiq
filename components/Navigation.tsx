@@ -10,10 +10,14 @@ const NAV = [
   { href: "/szkolenia", label: "Szkolenia", code: "01" },
   { href: "/train-the-trainer", label: "Train-The-Trainer", code: "02" },
   { href: "/dofinansowania", label: "Dofinansowania UE", code: "03" },
-  { href: "/o-nas", label: "Architekci", code: "04" },
-  { href: "/merch", label: "Zbrojownia", code: "05" },
+  { href: "/o-nas", label: "O nas", code: "04" },
+  { href: "/merch", label: "Merch", code: "05" },
   { href: "/faq", label: "FAQ", code: "06" },
+  { href: "/kariera", label: "Kariera", code: "07" },
 ];
+
+// Strony-lejki bez nawigacji (czysty landing kampanijny — bez navbara)
+const HIDE_NAV_PATHS = ["/pomorskie", "/polityka-prywatnosci"];
 
 export default function Navigation() {
   const path = usePathname();
@@ -29,6 +33,10 @@ export default function Navigation() {
 
   useEffect(() => { setOpen(false); }, [path]);
 
+  // ─── Lejek WEKTOR: brak navbara (czysty landing kampanijny) ───
+  const norm = (path || "/").replace(/\/+$/, "") || "/";
+  if (HIDE_NAV_PATHS.includes(norm)) return null;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[60] transition-all duration-500 ${
@@ -37,7 +45,8 @@ export default function Navigation() {
     >
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 lg:px-10 py-4">
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <Logo />
+          <Logo size={52} className="lg:hidden" />
+          <Logo size={104} className="hidden lg:flex" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
@@ -73,7 +82,7 @@ export default function Navigation() {
               className="group relative inline-flex items-center gap-2 rounded-full bg-electric-yellow px-5 py-2.5 text-[13px] font-semibold text-ink neon-yellow"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-ink animate-pulse" />
-              Sprawdź budżet UE
+              Sprawdź, czy się kwalifikujesz
             </Link>
           </Magnetic>
         </div>
@@ -115,7 +124,7 @@ export default function Navigation() {
                   href="/#protokol"
                   className="flex items-center justify-center gap-2 rounded-full bg-electric-yellow px-5 py-3 text-sm font-semibold text-ink"
                 >
-                  Sprawdź budżet UE →
+                  Sprawdź, czy się kwalifikujesz →
                 </Link>
               </li>
             </ul>

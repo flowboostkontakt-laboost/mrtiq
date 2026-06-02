@@ -271,7 +271,7 @@ function Bars() {
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-bone-mute">
-            Skuteczność dotacji · % accept rate
+            Skuteczność dotacji · ostatnie 5 naborów
           </div>
           <div className="mt-2 font-display text-3xl font-semibold tracking-tight">94%</div>
         </div>

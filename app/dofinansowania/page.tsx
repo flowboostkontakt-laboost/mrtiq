@@ -41,6 +41,7 @@ export default function FundingPage() {
   return (
     <>
       <PageHeader
+        glow="cyan"
         index="[03]"
         eyebrow="EU Funding Protocol · System Active"
         title="Twój budżet leży na cudzym koncie."

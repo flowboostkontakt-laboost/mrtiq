@@ -1,6 +1,8 @@
 import PageHeader from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
+import Magnetic from "@/components/Magnetic";
+import AcademyDragon from "@/components/sections/AcademyDragon";
 import FinalGate from "@/components/sections/FinalGate";
 import Link from "next/link";
 
@@ -27,6 +29,7 @@ export default function SzkoleniaPage() {
   return (
     <>
       <PageHeader
+        glow="cyan"
         index="[01]"
         eyebrow="Akademia · The Adaptation Protocol v.4.1"
         title="Wybierz swój Upgrade."
@@ -67,9 +70,11 @@ export default function SzkoleniaPage() {
                     ))}
                   </div>
                   <div className="mt-9 flex flex-wrap items-center gap-3">
-                    <Link href="/#protokol" className="inline-flex items-center gap-2 rounded-full bg-electric-yellow px-6 py-3.5 text-sm font-semibold text-ink neon-yellow">
-                      Zobacz pełny sylabus →
-                    </Link>
+                    <Magnetic strength={0.35}>
+                      <Link href="/#protokol" className="inline-flex items-center gap-2 rounded-full bg-electric-yellow px-6 py-3.5 text-sm font-semibold text-ink neon-yellow">
+                        Zobacz pełny sylabus →
+                      </Link>
+                    </Magnetic>
                     <Link href="/dofinansowania" className="inline-flex items-center gap-2 rounded-full hairline-strong px-5 py-3 text-[13px] font-medium hover:border-white/20 transition-colors">
                       Sfinansuj z UE
                     </Link>
@@ -92,15 +97,18 @@ export default function SzkoleniaPage() {
         </div>
       </section>
 
+      {/* Scroll-scrubbed dragon — The Academy Matrix (homepage-grade motion) */}
+      <AcademyDragon />
+
       {/* Department Matrix */}
       <section className="relative py-20 lg:py-28">
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-magenta-neon">[ 02 · matryca szkoleń ]</div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-magenta-neon">[ 03 · drzewo rozwoju ]</div>
                 <h3 className="mt-4 font-display text-[clamp(2rem,4.6vw,4rem)] font-semibold tracking-tightest-2">
-                  Drzewo rozwoju.
+                  Skompletuj kompetencje.
                 </h3>
               </div>
               <p className="max-w-md text-[14.5px] text-bone-mute">

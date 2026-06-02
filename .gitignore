@@ -10,3 +10,16 @@ next-env.d.ts.bak
 
 # Source briefs / referencje (poza repo)
 Strona MRTIQ 05-2026A/
+
+.vercel
+
+# Local Claude config (not for repo)
+.claude/
+
+# Root-level oryginały — duplikaty siedzą w public/
+/hero.webm
+/sekcja2.webm
+/animacjahero.webm
+/Logo mrtiq.JPG
+/Logo_mrtiq-removebg-preview.png
+/mrtiq.gif

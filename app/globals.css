@@ -87,13 +87,35 @@
   .scrollbar-hide { scrollbar-width: none; }
 }
 
-/* Marquee gap doubling */
+/* Marquee — keyframe zdefiniowany lokalnie (nie zależy od emisji z Tailwind) */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 .marquee-track {
   display: flex;
   width: max-content;
   animation: ticker 60s linear infinite;
+  will-change: transform;
 }
 .marquee-track:hover { animation-play-state: paused; }
+
+/* Pionowy marquee (np. kolumna opinii) */
+@keyframes ticker-y {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.marquee-col {
+  display: flex;
+  flex-direction: column;
+  animation: ticker-y 45s linear infinite;
+  will-change: transform;
+}
+.marquee-col:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .marquee-col { animation: none; }
+}
 
 /* Custom cursor primitives */
 .cursor-dot, .cursor-ring {

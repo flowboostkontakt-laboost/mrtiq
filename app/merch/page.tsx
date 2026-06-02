@@ -4,15 +4,97 @@ import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
 import { useState } from "react";
 
+// Photos live in /public/Produkty MERCH/*.PNG — URL-encoded at runtime
+const MERCH_DIR = "/Produkty%20MERCH";
+
 const PRODUCTS = [
-  { code: "P01", name: "Stealth Tracksuit", spec: "Bluza + Spodnie · Vantablack / Urban Grey · haftowany neonowy Smok", pub: 1200, kurs: 300, ttt: 0, tier: "GEAR" },
-  { code: "P02", name: "Core T-Shirt", spec: "100% bawełna premium · krój dopasowany · dyskretne logo", pub: 159, kurs: 69.39, ttt: 0, tier: "GEAR" },
-  { code: "P03", name: "Operator Socks", spec: "Wysoka wytrzymałość · neonowe detale Cyan / Magenta", pub: 69, kurs: 27, ttt: 0, tier: "GEAR" },
-  { code: "P04", name: "Certyfikat Premium", spec: "Papier premium / hologram · dyplom ukończenia", pub: 249, kurs: 0, ttt: 0, tier: "SUPPLY" },
-  { code: "P05", name: "Tactical Decals Set", spec: "Zestaw wlepek na laptopa, telefon, sprzęt audio", pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY" },
-  { code: "P06", name: "Black Mug", spec: "Czarny matowy kubek operacyjny · 350 ml", pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY" },
-  { code: "P07", name: "Cyber Keychain", spec: "Brelok terminala · metal · grawer numerowy", pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY" },
+  {
+    code: "P01",
+    name: "Stealth Tracksuit",
+    spec: "Bluza + Spodnie · Vantablack · haftowany neonowy Smok",
+    image: `${MERCH_DIR}/Komplet%20Dres%20czarny.PNG`,
+    pub: 1200, kurs: 300, ttt: 0, tier: "GEAR",
+  },
+  {
+    code: "P02",
+    name: "Stealth Tracksuit · Urban Grey",
+    spec: "Wariant szary · ten sam techniczny krój · neonowy Smok na plecach",
+    image: `${MERCH_DIR}/Komplet%20Dres%20szary.PNG`,
+    pub: 1200, kurs: 300, ttt: 0, tier: "GEAR",
+  },
+  {
+    code: "P03",
+    name: "Core T-Shirt · Classic",
+    spec: "100% bawełna premium · krój dopasowany · dyskretne logo",
+    image: `${MERCH_DIR}/Koszulka%20classic.PNG`,
+    pub: 159, kurs: 69.39, ttt: 0, tier: "GEAR",
+  },
+  {
+    code: "P04",
+    name: "Core T-Shirt · Dance",
+    spec: "Wersja Dance · oversized · grafika z neonowym Smokiem",
+    image: `${MERCH_DIR}/Koszulka%20Dance.PNG`,
+    pub: 179, kurs: 79, ttt: 0, tier: "GEAR",
+  },
+  {
+    code: "P05",
+    name: "Operator Socks",
+    spec: "Wysoka wytrzymałość · neonowe detale Cyan / Magenta",
+    image: `${MERCH_DIR}/Skarpetki.PNG`,
+    pub: 69, kurs: 27, ttt: 0, tier: "GEAR",
+  },
+  {
+    code: "P06",
+    name: "Certyfikat Trenera",
+    spec: "Papier premium / hologram · dyplom ukończenia",
+    image: `${MERCH_DIR}/Certyfikat%20Trenera.PNG`,
+    pub: 249, kurs: 0, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P07",
+    name: "Identyfikator Trenera",
+    spec: "Metalowa, numerowana karta z kodem certyfikacji",
+    image: `${MERCH_DIR}/Identyfikator%20Trenera.PNG`,
+    pub: 149, kurs: 49, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P08",
+    name: "Tactical Decals · Set 01",
+    spec: "Zestaw wlepek na laptopa, telefon, sprzęt audio",
+    image: `${MERCH_DIR}/Wlepy.PNG`,
+    pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P09",
+    name: "Tactical Decals · Set 02",
+    spec: "Druga seria · neonowy Smok i logotypy mrtiq",
+    image: `${MERCH_DIR}/Wlepy2.PNG`,
+    pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P10",
+    name: "Black Mug",
+    spec: "Czarny matowy kubek operacyjny · 350 ml",
+    image: `${MERCH_DIR}/Kubek.PNG`,
+    pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P11",
+    name: "Cyber Keychain",
+    spec: "Brelok terminala · metal · grawer numerowy",
+    image: `${MERCH_DIR}/Brelok.PNG`,
+    pub: 39, kurs: 0, ttt: 0, tier: "SUPPLY",
+  },
+  {
+    code: "P12",
+    name: "Neon Trenera",
+    spec: "Dedykowany neon MRTIQ — gabinet, studio, lajwy",
+    image: `${MERCH_DIR}/Neon%20Trenera.PNG`,
+    pub: 1490, kurs: 590, ttt: 0, tier: "GEAR",
+  },
 ];
+
+const FORGE_IMG = `${MERCH_DIR}/Koszulka%20Lidera.PNG`;
 
 const TIERS = [
   { id: "public", label: "Publiczny", desc: "Cena rynkowa", color: "border-white/10 text-bone-mute" },
@@ -31,6 +113,7 @@ export default function MerchPage() {
   return (
     <>
       <PageHeader
+        glow="yellow"
         index="[05]"
         eyebrow="MRTIQ Supply Vault · Status: Authorized Access Only"
         title="To nie są ubrania."
@@ -98,12 +181,12 @@ export default function MerchPage() {
                 <Spotlight glowColor={i % 2 ? "0,229,197" : "255,45,170"} className="group h-full">
                   <div className="h-full rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl overflow-hidden transition-colors group-hover:border-white/20">
                     <div className="relative aspect-[4/3] overflow-hidden border-b border-white/5">
-                      <ProductVisual code={p.code} />
-                      <div className="absolute left-4 top-4 rounded-full bg-ink/70 backdrop-blur px-3 py-1 font-mono text-[10px] uppercase tracking-[0.24em] text-bone">
+                      <ProductImage src={p.image} alt={p.name} accent={i % 2 ? "cyan" : "magenta"} />
+                      <div className="absolute left-4 top-4 rounded-full bg-ink/70 backdrop-blur px-3 py-1 font-mono text-[10px] uppercase tracking-[0.24em] text-bone z-10">
                         {p.code} · {p.tier}
                       </div>
                       {tier !== "public" && (
-                        <div className="absolute right-4 top-4 rounded-full bg-electric-yellow/90 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink">
+                        <div className="absolute right-4 top-4 rounded-full bg-electric-yellow/90 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink z-10">
                           {tier === "ttt" ? "−100%" : "−" + Math.round((1 - p.kurs / p.pub) * 100) + "%"}
                         </div>
                       )}
@@ -168,8 +251,14 @@ export default function MerchPage() {
                     </div>
                   </div>
                   <div className="lg:col-span-5">
-                    <div className="aspect-square rounded-3xl bg-gradient-to-br from-electric-yellow/40 via-electric-yellow/10 to-transparent grid place-items-center hairline-strong overflow-hidden">
-                      <div className="font-display text-[120px] font-bold text-electric-yellow text-glow-yellow tracking-tightest-2 leading-none">M</div>
+                    <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-electric-yellow/40 via-electric-yellow/10 to-transparent hairline-strong overflow-hidden">
+                      <div className="absolute inset-0 bg-grid-fine opacity-40" />
+                      <img
+                        src={FORGE_IMG}
+                        alt="Koszulka Lidera"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
                     </div>
                   </div>
                 </div>
@@ -218,25 +307,24 @@ export default function MerchPage() {
   );
 }
 
-function ProductVisual({ code }: { code: string }) {
-  const seed = parseInt(code.replace(/\D/g, ""), 10) || 1;
-  const tones = [
-    ["from-magenta-neon/30", "to-cyan-neon/10"],
-    ["from-cyan-neon/30", "to-magenta-neon/10"],
-    ["from-electric-yellow/30", "to-cyan-neon/10"],
-  ];
-  const t = tones[seed % tones.length];
+function ProductImage({
+  src, alt, accent,
+}: { src: string; alt: string; accent: "cyan" | "magenta" }) {
+  const tones =
+    accent === "cyan"
+      ? ["from-cyan-neon/30", "to-magenta-neon/10"]
+      : ["from-magenta-neon/30", "to-cyan-neon/10"];
   return (
-    <div className={`absolute inset-0 bg-gradient-to-br ${t[0]} ${t[1]}`}>
+    <div className={`absolute inset-0 bg-gradient-to-br ${tones[0]} ${tones[1]}`}>
       <div className="absolute inset-0 bg-grid-fine opacity-50" />
-      <div className="absolute inset-0 grid place-items-center">
-        <div className="relative h-32 w-32 rounded-2xl bg-ink/70 backdrop-blur-xl hairline-strong grid place-items-center font-display text-3xl font-bold tracking-tightest-2">
-          mrtiq
-        </div>
-      </div>
-      <div className="absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.24em] text-bone-mute">
-        SKU/{code}
-      </div>
+      <img
+        src={src}
+        alt={alt}
+        className="absolute inset-0 h-full w-full object-contain p-6 transition-transform duration-500 group-hover:scale-[1.04]"
+        loading="lazy"
+        draggable={false}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent pointer-events-none" />
     </div>
   );
 }

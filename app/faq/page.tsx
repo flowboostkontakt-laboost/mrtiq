@@ -13,8 +13,8 @@ const CATEGORIES = [
     color: "magenta",
     items: [
       {
-        q: "Dlaczego działacie pod tyloma markami (Xpunkt, mrtiq, Content-Media, Konik Systems)?",
-        a: "Ponieważ nie wierzymy w generyczne rozwiązania „dla każdego”. Jesteśmy precyzyjnie zaprojektowanym ekosystemem, w którym każda marka to wyspecjalizowana dywizja: Xpunkt — zautomatyzowana obsługa małych biznesów lokalnych. Content-Media — wdrożenia premium dla korporacji. MRTIQ — edukacja, szkolenia i pozyskiwanie kapitału (dotacje). Konik Systems — rdzeń inżynieryjny kodujący RevOS i Agentów AI.",
+        q: "Dlaczego działacie pod tyloma markami (Xpunkt, mrtiq, Konik Systems)?",
+        a: "Ponieważ nie wierzymy w generyczne rozwiązania „dla każdego”. Jesteśmy precyzyjnie zaprojektowanym ekosystemem, w którym każda marka to wyspecjalizowana dywizja: Xpunkt — zautomatyzowana obsługa małych biznesów lokalnych. MRTIQ — edukacja, szkolenia i pozyskiwanie kapitału (dotacje). Konik Systems — rdzeń inżynieryjny kodujący RevOS i Agentów AI.",
       },
       {
         q: "Czym dokładnie MRTIQ różni się od Konik Systems?",

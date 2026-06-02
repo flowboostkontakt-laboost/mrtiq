@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.git
+.DS_Store
+
+# Source briefs / referencje
+Strona MRTIQ 05-2026A/
+
+# Root-level originals (duplikaty siedzą w public/) — leading slash = tylko root
+/hero.webm
+/sekcja2.webm
+/animacjahero.webm
+/Logo mrtiq.JPG
+/Logo_mrtiq-removebg-preview.png
+/mrtiq.gif

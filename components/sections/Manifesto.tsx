@@ -28,7 +28,7 @@ export default function Manifesto() {
         <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-magenta-neon">
           [03.5] · Manifest
         </div>
-        <h2 className="mt-8 font-display font-semibold tracking-tightest-2 leading-[1.05] text-[clamp(2rem,5.4vw,5rem)] text-pretty max-w-[18ch]">
+        <h2 className="mt-8 font-display font-semibold tracking-tightest-2 leading-[1.05] text-[clamp(2rem,5.4vw,5rem)] text-pretty max-w-[32ch]">
           {words.map((w, i) => (
             <Word key={i} word={w} index={i} total={total} progress={scrollYProgress} />
           ))}

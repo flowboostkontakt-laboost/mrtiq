@@ -7,15 +7,16 @@ import StickyMobileBar from "@/components/StickyMobileBar";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import ScrollProgress from "@/components/ScrollProgress";
+import ConsentBanner from "@/components/ConsentBanner";
 
 export const metadata: Metadata = {
-  title: "MRTIQ — Marketing Intelligence | Cyfrowe Czarnoksięstwo dla Biznesu",
+  title: "MRTIQ — Marketing Intelligence | Szkolenia AI w sprzedaży i marketingu",
   description:
-    "Mrtiq pozyskuje dotacje UE, szkoli operatorów AI i wdraża system Konik RevOS. Zautomatyzujemy Twój chaos. Unia za to zapłaci.",
+    "MRTIQ szkoli zespoły sprzedaży i marketingu w świadomym, zgodnym z prawem używaniu AI. Szkolenia współfinansowane ze środków UE. Część Grupy KONIK.",
   metadataBase: new URL("https://mrtiq.eu"),
   openGraph: {
-    title: "MRTIQ — Cyfrowe Czarnoksięstwo",
-    description: "Pozyskujemy dotacje UE, szkolimy zespoły, wdrażamy AI.",
+    title: "MRTIQ — Marketing Intelligence",
+    description: "Szkolenia z AI w sprzedaży i marketingu. Dofinansowanie ze środków Unii Europejskiej.",
     type: "website",
   },
 };
@@ -48,6 +49,7 @@ export default function RootLayout({
         <main className="relative z-[2]">{children}</main>
         <Footer />
         <StickyMobileBar />
+        <ConsentBanner />
       </body>
     </html>
   );
