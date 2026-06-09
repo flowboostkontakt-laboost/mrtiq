@@ -1,13 +1,7 @@
 "use client";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
-
-const DragonCanvasRearing = dynamic(
-  () => import("@/components/DragonCanvas").then((m) => m.DragonCanvasRearing),
-  { ssr: false }
-);
 
 const BENEFITS = [
   { k: "Twardy know-how", v: "Prompt engineering, automatyzacja, strategia" },
@@ -32,7 +26,16 @@ export default function Tribe() {
           className="pointer-events-none hidden lg:block absolute right-[-4%] xl:right-[0%] top-1/2 -translate-y-1/2 z-[1]"
         >
           <div className="relative h-[640px] w-[680px]">
-            <DragonCanvasRearing />
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="h-full w-full object-contain"
+            >
+              <source src="/smok_tribe.webm" type="video/webm" />
+            </video>
           </div>
         </div>
 

@@ -1,10 +1,7 @@
 "use client";
-import { useRef, useState } from "react";
-import dynamic from "next/dynamic";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
 import { MaskReveal } from "@/components/Reveal";
-
-const DragonCanvas = dynamic(() => import("@/components/DragonCanvas"), { ssr: false });
 
 const PILLARS = [
   {
@@ -164,7 +161,7 @@ function DragonStage({ progress }: { progress: MotionValue<number> }) {
           maskImage: "radial-gradient(ellipse 78% 72% at 58% 50%, #000 32%, transparent 88%)",
         }}
       >
-        <DragonCanvas progress={progress} />
+        <DragonScrubCanvas progress={progress} />
       </motion.div>
 
       {/* MANA overlay — cyan armor glow + Euro particles */}
@@ -183,6 +180,89 @@ function DragonStage({ progress }: { progress: MotionValue<number> }) {
       <motion.div style={{ opacity: golemActive }} className="absolute inset-0">
         <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_60%_50%,rgba(255,230,0,0.30),transparent_70%)]" />
       </motion.div>
+    </div>
+  );
+}
+
+/* Scroll-scrubbed dragon — odtwarzacz SEKWENCJI KLATEK na <canvas> (Neon Ascension).
+   Klatki wczytane z góry jako obrazki; drawImage przy scrollu = brak dekodowania,
+   masłowo gładki scrub (technika scroll-animacji Apple). Zastępuje wideo-scrub. */
+const LADDER_FRAMES = 150;
+function pad3(n: number) { return String(n).padStart(3, "0"); }
+
+function DragonScrubCanvas({ progress }: { progress: MotionValue<number> }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imgsRef = useRef<HTMLImageElement[]>([]);
+  const targetRef = useRef(0);
+  const curRef = useRef(0);
+  const drawnRef = useRef(-1);
+  const rafRef = useRef<number | null>(null);
+
+  // preload wszystkich klatek
+  useEffect(() => {
+    const imgs: HTMLImageElement[] = [];
+    for (let i = 1; i <= LADDER_FRAMES; i++) {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = `/smok_ladder_seq/f_${pad3(i)}.webp`;
+      imgs.push(img);
+    }
+    imgsRef.current = imgs;
+    return () => { imgsRef.current = []; };
+  }, []);
+
+  // progress (0..1) -> docelowa klatka
+  useEffect(() => {
+    const unsub = progress.on("change", (v) => {
+      targetRef.current = Math.max(0, Math.min(1, v));
+    });
+    return unsub;
+  }, [progress]);
+
+  // pętla rysująca z wygładzeniem
+  useEffect(() => {
+    const draw = () => {
+      const canvas = canvasRef.current;
+      const imgs = imgsRef.current;
+      if (canvas && imgs.length) {
+        curRef.current += (targetRef.current - curRef.current) * 0.16;
+        const idx = Math.min(LADDER_FRAMES - 1, Math.max(0, Math.round(curRef.current * (LADDER_FRAMES - 1))));
+        let img = imgs[idx];
+        if (!(img && img.complete && img.naturalWidth)) {
+          // jeśli docelowa klatka jeszcze się ładuje, znajdź najbliższą gotową
+          for (let d = 1; d < LADDER_FRAMES; d++) {
+            const a = imgs[idx - d], b = imgs[idx + d];
+            if (a && a.complete && a.naturalWidth) { img = a; break; }
+            if (b && b.complete && b.naturalWidth) { img = b; break; }
+          }
+        }
+        if (img && img.complete && img.naturalWidth && drawnRef.current !== idx) {
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const w = Math.max(1, Math.round(rect.width * dpr));
+            const h = Math.max(1, Math.round(rect.height * dpr));
+            if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const ir = img.naturalWidth / img.naturalHeight;
+            const cr = canvas.width / canvas.height;
+            let dw, dh;
+            if (ir > cr) { dw = canvas.width; dh = dw / ir; } else { dh = canvas.height; dw = dh * ir; }
+            ctx.drawImage(img, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
+            drawnRef.current = idx;
+          }
+        }
+      }
+      rafRef.current = requestAnimationFrame(draw);
+    };
+    rafRef.current = requestAnimationFrame(draw);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, []);
+
+  return (
+    <div className="absolute inset-0 grid place-items-center">
+      <canvas ref={canvasRef} className="h-[80%] w-full will-change-transform" style={{ display: "block" }} />
     </div>
   );
 }
