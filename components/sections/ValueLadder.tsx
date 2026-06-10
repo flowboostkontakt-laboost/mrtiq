@@ -176,7 +176,7 @@ function DragonStage({ progress }: { progress: MotionValue<number> }) {
         <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_55%_45%,rgba(255,45,170,0.28),transparent_70%)] mix-blend-screen" />
       </motion.div>
 
-      {/* GOLEM overlay — yellow aura (zębatki teraz w klatce piersiowej smoka) */}
+      {/* GOLEM overlay — żółta aura */}
       <motion.div style={{ opacity: golemActive }} className="absolute inset-0">
         <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_60%_50%,rgba(255,230,0,0.30),transparent_70%)]" />
       </motion.div>
@@ -269,20 +269,22 @@ function DragonScrubCanvas({ progress }: { progress: MotionValue<number> }) {
 
 function EuroDust() {
   // 14 tiny € floating upward with random delays
-  const items = Array.from({ length: 14 });
+  // cyfrowy pył z okolic głowy smoka → turkusowe € (Karta 1 / Mana)
+  const items = Array.from({ length: 22 });
   return (
-    <div className="absolute inset-y-0 right-[2%] lg:right-[5%] w-[28%] lg:w-[22%]">
+    <div className="absolute right-[20%] lg:right-[26%] top-[16%] h-[52%] w-[26%]">
       {items.map((_, i) => {
-        const left = 15 + ((i * 53) % 80);
-        const delay = (i * 0.4) % 4;
-        const dur = 3.4 + ((i * 0.7) % 2.6);
+        const left = 8 + ((i * 47) % 84);
+        const delay = (i * 0.32) % 3.2;
+        const dur = 2.8 + ((i * 0.6) % 2.2);
+        const size = 16 + ((i * 7) % 16);
         return (
           <motion.span
             key={i}
-            className="absolute font-mono text-[14px] text-cyan-neon"
-            style={{ left: `${left}%`, bottom: "-10%", textShadow: "0 0 10px rgba(0,229,197,.8)" }}
+            className="absolute font-mono font-semibold text-cyan-neon"
+            style={{ left: `${left}%`, bottom: "0%", fontSize: `${size}px`, textShadow: "0 0 14px rgba(0,229,197,1), 0 0 26px rgba(0,229,197,.7)" }}
             initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: [0, 1, 1, 0], y: [-20, -160, -260, -340] }}
+            animate={{ opacity: [0, 1, 1, 0], y: [0, -120, -240, -360], scale: [0.4, 1, 1, 0.9] }}
             transition={{ duration: dur, repeat: Infinity, delay, ease: "easeOut" }}
           >
             €
@@ -294,18 +296,18 @@ function EuroDust() {
 }
 
 function BinaryStream() {
-  // Vertical columns of binary scrolling, framing the wing
-  const cols = Array.from({ length: 6 });
+  // Ciągi danych przewijające się po obszarze skrzydła (Karta 2 / Skill)
+  const cols = Array.from({ length: 9 });
   return (
-    <div className="absolute inset-y-0 right-[3%] lg:right-[7%] flex gap-4 items-stretch w-[20%] lg:w-[16%] overflow-hidden">
+    <div className="absolute right-[8%] lg:right-[12%] top-[14%] h-[60%] flex gap-3 lg:gap-4 items-stretch w-[34%] lg:w-[30%] overflow-hidden">
       {cols.map((_, i) => (
         <motion.div
           key={i}
-          className="font-mono text-[11px] leading-tight tabular-nums whitespace-pre overflow-hidden h-full"
+          className="font-mono text-[14px] lg:text-[15px] leading-tight tabular-nums whitespace-pre overflow-hidden h-full font-medium"
           style={{
             color: i % 2 ? "#00E5C5" : "#FF2DAA",
-            opacity: 0.55,
-            textShadow: i % 2 ? "0 0 6px rgba(0,229,197,.7)" : "0 0 6px rgba(255,45,170,.7)",
+            opacity: 0.9,
+            textShadow: i % 2 ? "0 0 8px rgba(0,229,197,.9)" : "0 0 8px rgba(255,45,170,.9)",
           }}
           animate={{ y: ["-30%", "0%"] }}
           transition={{ duration: 3 + (i % 3), repeat: Infinity, ease: "linear", delay: i * 0.3 }}
@@ -327,8 +329,17 @@ function generateBinary(seed: number) {
 }
 
 function Gears() {
+  // "Wnętrze zbroi" w fazie GOLEM — ciemna wnęka + płynnie obracające się zębatki nad piersią
   return (
-    <div className="absolute right-[3%] lg:right-[6%] top-1/2 -translate-y-1/2">
+    <div className="absolute right-[15%] lg:right-[20%] top-[46%] -translate-y-1/2 pointer-events-none">
+      <div
+        className="absolute left-1/2 top-1/2 h-[240px] w-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,230,0,0.18) 0%, rgba(10,8,2,0.88) 40%, rgba(5,5,5,0.94) 58%, transparent 72%)",
+          boxShadow: "inset 0 0 70px rgba(0,0,0,0.95), 0 0 55px rgba(255,230,0,0.28)",
+        }}
+      />
       <div className="relative h-[180px] w-[180px]">
         <motion.div
           className="absolute left-0 top-0"

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
 
@@ -36,6 +37,8 @@ export default function Tribe() {
             >
               <source src="/smok_tribe.webm" type="video/webm" />
             </video>
+            {/* "Wybudzenie Algorytmów" — binarny dym z pyska smoka */}
+            <BinarySmoke />
           </div>
         </div>
 
@@ -129,6 +132,48 @@ export default function Tribe() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/* "Wybudzenie Algorytmów" — geometryczne pąki dymu z pyska smoka,
+   złożone z pulsującego turkusowo-różowego kodu binarnego (Sekcja 3). */
+function BinarySmoke() {
+  const puffs = Array.from({ length: 16 });
+  const frags = ["01", "10", "0110", "1001", "11", "00", "1010", "0101"];
+  return (
+    <div className="absolute left-[36%] top-[26%] h-[34%] w-[34%] overflow-visible">
+      {puffs.map((_, i) => {
+        const left = (i * 41) % 92;
+        const delay = (i * 0.37) % 4;
+        const dur = 2.6 + ((i * 0.5) % 2.4);
+        const cyan = i % 2 === 0;
+        const drift = i % 2 ? 1 : -1;
+        const col = cyan ? "#00E5C5" : "#FF2DAA";
+        return (
+          <motion.span
+            key={i}
+            className="absolute font-mono font-semibold leading-none whitespace-pre"
+            style={{
+              left: `${left}%`,
+              top: "70%",
+              fontSize: `${11 + ((i * 5) % 10)}px`,
+              color: col,
+              textShadow: `0 0 8px ${col}, 0 0 16px ${col}`,
+            }}
+            initial={{ opacity: 0, y: 0, scale: 0.4 }}
+            animate={{
+              opacity: [0, 0.95, 0.6, 0],
+              y: [0, -70, -150, -230],
+              x: [0, drift * 18, drift * 40, drift * 64],
+              scale: [0.4, 1, 1.4, 1.9],
+            }}
+            transition={{ duration: dur, repeat: Infinity, delay, ease: "easeOut" }}
+          >
+            {frags[i % frags.length]}
+          </motion.span>
+        );
+      })}
+    </div>
   );
 }
 
