@@ -13,7 +13,7 @@ const NAV = [
   { href: "/o-nas", label: "O nas", code: "04" },
   { href: "/merch", label: "Merch", code: "05" },
   { href: "/faq", label: "FAQ", code: "06" },
-  { href: "/kariera", label: "Kariera", code: "07" },
+  { href: "/kariera", label: "Współpraca", code: "07" },
 ];
 
 // Strony-lejki bez nawigacji (czysty landing kampanijny — bez navbara)
@@ -46,7 +46,7 @@ export default function Navigation() {
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 lg:px-10 py-4">
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <Logo size={52} className="lg:hidden" />
-          <Logo size={104} className="hidden lg:flex" />
+          <Logo size={80} className="hidden lg:flex" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-1">
@@ -61,7 +61,7 @@ export default function Navigation() {
                   <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-bone-mute group-hover:text-cyan-neon transition-colors">
                     {n.code}
                   </span>
-                  <span>{n.label}</span>
+                  <span className="whitespace-nowrap">{n.label}</span>
                   {active && (
                     <motion.span
                       layoutId="nav-active"
@@ -114,7 +114,7 @@ export default function Navigation() {
                     href={n.href}
                     className="flex items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-[15px] font-medium text-bone hover:border-white/10 hover:bg-white/[0.03]"
                   >
-                    <span>{n.label}</span>
+                    <span className="whitespace-nowrap">{n.label}</span>
                     <span className="font-mono text-[10px] tracking-[0.24em] text-bone-mute">[{n.code}]</span>
                   </Link>
                 </li>

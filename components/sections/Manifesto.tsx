@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 
 const SENTENCE =
-  "Szary to kolor korporacji, które boją się jutra. My wdrażamy transformację na pełnym kontraście — kapitał z UE, kompetencje od praktyków, kod od inżynierów Konik Systems.";
+  "Szary to kolor firm, które boją się jutra. My wdrażamy transformację na pełnym kontraście — gotówka prosto z Brukseli, agenci AI bez snu, procesy zaprojektowane przez inżynierów którzy wdrożyli ich już ponad 180.";
 
 export default function Manifesto() {
   const ref = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export default function Manifesto() {
         </h2>
         <div className="mt-12 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.32em] text-bone-mute">
           <span className="h-px w-10 bg-bone-mute" />
-          <span>— Werdykt Architekta Komunikacji</span>
+          <span>— MRTiQ · Architekci Transformacji</span>
         </div>
       </div>
     </section>

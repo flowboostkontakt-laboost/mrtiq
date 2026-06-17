@@ -39,8 +39,9 @@ export default function FAQTeaser() {
               <span className="text-bone-mute">transparentność.</span>
             </h2>
             <p className="mt-6 max-w-md text-[15.5px] leading-relaxed text-bone-mute">
-              Transformacja cyfrowa budzi pytania, biurokracja UE budzi strach.
-              Rozbrajamy najczęstsze obiekcje CEO, CFO i HR.
+              Transformacja cyfrowa budzi pytania. Biurokracja UE budzi strach.
+              Słusznie. Każda obiekcja CEO i CFO ma tu odpowiedź — z liczbami,
+              nie obietnicami.
             </p>
             <Link
               href="/faq"

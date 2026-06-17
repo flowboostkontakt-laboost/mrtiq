@@ -5,9 +5,9 @@ import { Reveal, MaskReveal } from "@/components/Reveal";
 import Magnetic from "@/components/Magnetic";
 
 const GOALS = [
-  { id: "grant", label: "Chcę dotację na szkolenia" },
-  { id: "ai", label: "Chcę wdrożyć AI w firmie" },
-  { id: "ttt", label: "Chcę zostać Trenerem" },
+  { id: "grant", label: "Szkolenia AI z dotacją UE" },
+  { id: "ai", label: "Wdrożenie AI i automatyzacja procesów" },
+  { id: "ttt", label: "Program Train the Trainer" },
 ];
 
 export default function FinalGate() {
@@ -28,16 +28,16 @@ export default function FinalGate() {
               [06] Protokół Transformacji · Inicjacja
             </div>
             <h2 className="mt-5 font-display font-semibold tracking-tightest-2 text-[clamp(2.7rem,6vw,5.5rem)] leading-[0.94]">
-              <MaskReveal>Wezwij</MaskReveal>{" "}
+              <MaskReveal>Ile UE</MaskReveal>{" "}
               <MaskReveal delay={0.05}>
-                <span className="text-glow-yellow text-electric-yellow">Architektów</span>
+                <span className="text-glow-yellow text-electric-yellow">zapłaci</span>
               </MaskReveal>{" "}
-              <MaskReveal delay={0.1}>Zmiany.</MaskReveal>
+              <MaskReveal delay={0.1}>za Twoją transformację?</MaskReveal>
             </h2>
             <p className="mt-6 text-[15.5px] leading-relaxed text-bone-mute">
-              Zostaw NIP swojej firmy. W 48 godzin sprawdzimy ile tysięcy
-              złotych z dotacji UE leży na stole, gotowe sfinansować Twoją
-              transformację cyfrową.
+              Zostaw NIP. W 48 godzin dostaniesz konkretną mapę: ile złotych
+              możesz pozyskać, z jakich programów i kiedy złożyć wniosek.
+              Zero zobowiązań. Zero opłat. Tylko dane.
             </p>
           </div>
         </Reveal>
@@ -87,7 +87,7 @@ export default function FinalGate() {
                       type="submit"
                       className="group inline-flex items-center gap-3 rounded-full bg-electric-yellow px-8 py-4 text-[14px] font-bold uppercase tracking-[0.18em] text-ink neon-yellow"
                     >
-                      <Magnetic strength={0.3}>Wezwij Architektów</Magnetic>
+                      <Magnetic strength={0.3}>Sprawdź swój budżet UE</Magnetic>
                       <Magnetic strength={0.5}>↗</Magnetic>
                     </button>
                   </Magnetic>
@@ -104,11 +104,11 @@ export default function FinalGate() {
                   [ signal received ]
                 </div>
                 <h3 className="mt-4 font-display text-3xl lg:text-5xl font-semibold tracking-tightest-2">
-                  Protokół zainicjowany.
+                  Analiza w toku.
                 </h3>
                 <p className="mt-4 text-bone-mute max-w-md mx-auto">
-                  Architekt Transformacji odezwie się w ciągu 48 godzin z mapą
-                  Twojego potencjału dotacyjnego.
+                  W ciągu 48 godzin dostaniesz konkretną mapę: ile złotych,
+                  z jakich programów i kiedy złożyć wniosek.
                 </p>
               </motion.div>
             )}

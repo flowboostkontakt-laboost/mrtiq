@@ -2,7 +2,7 @@
 import { Reveal } from "@/components/Reveal";
 
 const NODES = [
-  { code: "X", name: "Xpunkt", role: "Lokalne biznesy", color: "text-cyan-neon", bg: "bg-cyan-neon/10" },
+  { code: "X", name: "Xpunkt", role: "Sieć lokalnych partnerów biznesowych", color: "text-cyan-neon", bg: "bg-cyan-neon/10" },
   { code: "M", name: "mrtiq", role: "Strategia · Kapitał · Edukacja", color: "text-magenta-neon", bg: "bg-magenta-neon/10", current: true },
   { code: "K", name: "Konik Systems", role: "Inżynieria · RevOS", color: "text-electric-yellow", bg: "bg-electric-yellow/10" },
 ];
@@ -16,12 +16,13 @@ export default function Ecosystem() {
             <div>
               <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-bone-mute">[ ekosystem ]</div>
               <h3 className="mt-3 font-display text-3xl lg:text-5xl font-semibold tracking-tight">
-                Trzy dywizje. Jedna grupa.
+                Jedna misja. Trzy supermoce.
               </h3>
             </div>
             <p className="max-w-md text-[14.5px] leading-relaxed text-bone-mute">
-              MRTIQ to umysł, energia i kapitał. Konik Systems to zbrojownia.
-              Razem tworzymy ekosystem do zadań specjalnych.
+              MRTiQ przynosi strategię, kapitał z UE i ludzi gotowych do zmiany.
+              Konik Systems dostarcza kod, agentów i RevOS. Osobno — narzędzia.
+              Razem — transformacja, której nie zatrzymasz.
             </p>
           </div>
         </Reveal>

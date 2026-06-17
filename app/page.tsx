@@ -6,10 +6,12 @@ import DataProof from "@/components/sections/DataProof";
 import Ecosystem from "@/components/sections/Ecosystem";
 import FAQTeaser from "@/components/sections/FAQTeaser";
 import FinalGate from "@/components/sections/FinalGate";
+import DragonLayer from "@/components/DragonLayer";
 
 export default function HomePage() {
   return (
     <>
+      <DragonLayer />
       <Hero />
       <ValueLadder />
       <Tribe />

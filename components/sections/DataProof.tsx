@@ -8,7 +8,7 @@ const STEPS = [
   {
     code: "01.PING",
     title: "Skanowanie potencjału",
-    body: "Wpisujesz NIP. W 48 godzin nasz zespół bezpłatnie weryfikuje pule budżetów PARP, KFS, BUR. Zero ukrytych opłat.",
+    body: "Wpisujesz NIP. W 48 godzin nasz zespół weryfikuje dostępne pule PARP, KFS i BUR dla Twojej firmy. Bezpłatnie. Bez zobowiązań. Pierwsza konkretna liczba już nazajutrz.",
     metric: 48,
     suffix: "h",
     label: "Audyt potencjału",
@@ -17,7 +17,7 @@ const STEPS = [
   {
     code: "02.OVERRIDE",
     title: "Generowanie wniosku",
-    body: "Specjaliści piszą wniosek językiem, który kochają algorytmy urzędnicze. Maksymalizujemy szansę akceptacji do 94%.",
+    body: "Specjaliści piszą wniosek językiem, który kochają komisje oceniające. Każde słowo pod kryteria naboru. Nie przygotowujemy dokumentów — budujemy argumentację, która wygrywa.",
     metric: 94,
     suffix: "%",
     label: "Skuteczność wniosków",
@@ -26,7 +26,7 @@ const STEPS = [
   {
     code: "03.UPLOAD",
     title: "Zastrzyk gotówki",
-    body: "Środki odblokowane. Trenerzy MRTIQ i inżynierowie Konik Systems wkraczają do firmy. Instalujemy kompetencje + technologię.",
+    body: "Środki odblokowane. Trenerzy MRTiQ i inżynierowie Konik Systems wchodzą do firmy z gotowym planem. Twój zespół przechodzi szkolenie, agenci AI startują. Koniec teorii — zaczyna się wdrożenie.",
     metric: 42,
     suffix: " mln",
     label: "Przetransferowanych PLN",
@@ -35,7 +35,7 @@ const STEPS = [
   {
     code: "04.CLEAR",
     title: "Czyste rozliczenie",
-    body: "Zamykamy projekt papierowo. Audyty, certyfikaty, raporty do urzędu — wszystko bierzemy na siebie. Czyste ręce, pełne konto.",
+    body: "Zamykamy projekt bez resztek. Audyty, certyfikaty, raporty końcowe do urzędu — bierzemy na siebie. Ty dostajesz pełne rozliczenie i dowód zwrotu inwestycji gotowy do pokazania zarządowi.",
     metric: 0,
     suffix: " PLN",
     label: "Ukrytych kosztów",
@@ -67,9 +67,9 @@ export default function DataProof() {
               </span>
             </h2>
             <p className="mt-6 text-[15.5px] leading-relaxed text-bone-mute max-w-2xl">
-              Jesteśmy głośni i kolorowi, ale na końcu dnia interesują nas
-              tylko mierzalne zyski i zoptymalizowane procesy. Każdy krok
-              udokumentowany. Każda złotówka rozliczona.
+              Liczby są naszym językiem ojczystym. Każdy wniosek ma
+              zmierzoną szansę akceptacji. Każda złotówka ma adres. Każdy
+              agent AI ma KPI. Możesz nam zaufać — albo sprawdzić dane.
             </p>
           </div>
         </Reveal>

@@ -5,10 +5,10 @@ import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
 
 const BENEFITS = [
-  { k: "Twardy know-how", v: "Prompt engineering, automatyzacja, strategia" },
-  { k: "Autoryzacja KONIK", v: "Wdrażaj rozwiązania Grupy KONIK na rynku" },
-  { k: "Premium Tooling", v: "Macbook, iPhone, RayNeo X3 Pro, neon" },
-  { k: "The Loot Box", v: "Bluza, czapka, neon, wlepki, ID Card" },
+  { k: "Twardy know-how", v: "Taktyki i narzędzia działające od pierwszego dnia — nie teoria, nie slajdy." },
+  { k: "Autoryzacja KONIK", v: "Certyfikowany dostęp do metodyki Grupy KONIK. Nie budujesz od zera." },
+  { k: "Premium Tooling", v: "Laptop, telefon, AR glasses. Komplet sprzętu Operatora gotowy w dniu startu." },
+  { k: "The Loot Box", v: "Identyfikacja Operatora: nie nosisz logo firmy — nosisz swoją rangę." },
 ];
 
 export default function Tribe() {
@@ -21,42 +21,22 @@ export default function Tribe() {
 
       {/* ── Tekst ── */}
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10 pt-24 lg:pt-32 pb-12">
-        {/* SMOK rearing — pełna postawa, klatka otwarta, 66 agentów w środku, dym z pyska */}
-        <div
-          aria-hidden
-          className="pointer-events-none hidden lg:block absolute right-[-4%] xl:right-[0%] top-1/2 -translate-y-1/2 z-[1]"
-        >
-          <div className="relative h-[640px] w-[680px]">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              className="h-full w-full object-contain"
-            >
-              <source src="/smok_tribe.webm" type="video/webm" />
-            </video>
-            {/* "Wybudzenie Algorytmów" — binarny dym z pyska smoka */}
-            <BinarySmoke />
-          </div>
-        </div>
-
         <Reveal>
           <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-magenta-neon">
             [03] The Tribe · 66 Agents · Loot Box
           </div>
           <h2 className="mt-5 font-display font-semibold tracking-tightest-2 text-[clamp(2.2rem,5vw,4.6rem)] leading-[0.94] max-w-3xl">
-            <span className="block">Zostań</span>
+            <span className="block">Dołącz zanim</span>
             <span className="block">
-              <span className="text-glow-magenta text-magenta-neon">Architektem</span>{" "}
-              Zmiany.
+              <span className="text-glow-magenta text-magenta-neon">zrobi to</span>{" "}
+              ktoś inny.
             </span>
           </h2>
           <p className="mt-6 max-w-xl text-[15.5px] leading-relaxed text-bone-mute">
-            W środku jarzy się elektryczno-żółty rdzeń —{" "}
-            <span className="text-electric-yellow">66 Agentów AI</span> krążących wokół
-            Twojej firmy 24/7. Wybudzenie Algorytmów.
+            Dołączasz do grona liderów, którzy nie pytają{" "}
+            <span className="text-electric-yellow">„czy AI?"</span>, lecz{" "}
+            „ile procesów jeszcze?". Program Train the Trainer czyni Cię
+            głosem tej rewolucji — w swoim środowisku, ze swoją marką.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -64,13 +44,13 @@ export default function Tribe() {
               href="/train-the-trainer"
               className="inline-flex items-center gap-2 rounded-full bg-electric-yellow px-6 py-3.5 text-[14px] font-semibold text-ink neon-yellow"
             >
-              Aplikuj do programu →
+              Dołącz do programu →
             </Link>
             <Link
               href="/merch"
               className="inline-flex items-center gap-2 rounded-full hairline-strong px-5 py-3 text-[13px] font-medium text-bone-mute hover:text-bone hover:border-white/20 transition-colors"
             >
-              Otwórz Zbrojownię
+              Zbrojownia Operatora
             </Link>
           </div>
 
@@ -118,7 +98,7 @@ export default function Tribe() {
                   MacBook · iPhone 17 Pro · RayNeo X3 Pro · Stealth Tracksuit
                 </div>
                 <div className="mt-1 text-sm text-bone-mute">
-                  Pełne wyposażenie cyfrowego komandosa. Wartość 3 500+ PLN.
+                  Sprzęt, który konkurencja kupuje za własne pieniądze. U Ciebie — część programu.
                 </div>
               </div>
               <Link
@@ -132,48 +112,6 @@ export default function Tribe() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-/* "Wybudzenie Algorytmów" — geometryczne pąki dymu z pyska smoka,
-   złożone z pulsującego turkusowo-różowego kodu binarnego (Sekcja 3). */
-function BinarySmoke() {
-  const puffs = Array.from({ length: 16 });
-  const frags = ["01", "10", "0110", "1001", "11", "00", "1010", "0101"];
-  return (
-    <div className="absolute left-[36%] top-[26%] h-[34%] w-[34%] overflow-visible">
-      {puffs.map((_, i) => {
-        const left = (i * 41) % 92;
-        const delay = (i * 0.37) % 4;
-        const dur = 2.6 + ((i * 0.5) % 2.4);
-        const cyan = i % 2 === 0;
-        const drift = i % 2 ? 1 : -1;
-        const col = cyan ? "#00E5C5" : "#FF2DAA";
-        return (
-          <motion.span
-            key={i}
-            className="absolute font-mono font-semibold leading-none whitespace-pre"
-            style={{
-              left: `${left}%`,
-              top: "70%",
-              fontSize: `${11 + ((i * 5) % 10)}px`,
-              color: col,
-              textShadow: `0 0 8px ${col}, 0 0 16px ${col}`,
-            }}
-            initial={{ opacity: 0, y: 0, scale: 0.4 }}
-            animate={{
-              opacity: [0, 0.95, 0.6, 0],
-              y: [0, -70, -150, -230],
-              x: [0, drift * 18, drift * 40, drift * 64],
-              scale: [0.4, 1, 1.4, 1.9],
-            }}
-            transition={{ duration: dur, repeat: Infinity, delay, ease: "easeOut" }}
-          >
-            {frags[i % frags.length]}
-          </motion.span>
-        );
-      })}
-    </div>
   );
 }
 

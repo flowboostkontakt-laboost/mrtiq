@@ -1,133 +1,145 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { MaskReveal } from "@/components/Reveal";
 
-const PILLARS = [
+const STEPS = [
   {
-    code: "01",
-    tag: "MANA",
-    accent: { text: "text-magenta-neon", glow: "rgba(255,45,170,.55)", grad: "from-magenta-neon/40 via-magenta-neon/10 to-transparent" },
+    code: "01", tag: "MANA",
+    color: "text-magenta-neon",
+    glow: "rgba(255,45,170,.55)",
+    accentBg: "bg-magenta-neon",
     title: "Pozyskujemy amunicję.",
-    body:
-      "Transformacja kosztuje. Ale nie musi kosztować Ciebie. Zgarniamy z rynku dotacje szkoleniowe i cyfrowe dla Twojej firmy. To nasz Koń Trojański.",
+    body: "Transformacja kosztuje. Ale nie musi kosztować Ciebie — musi kosztować Unię Europejską. Piszemy wnioski z 94% skutecznością. Twój budżet transformacyjny gotowy, zanim zaczniesz pierwsze szkolenie.",
     chips: ["PARP", "KFS", "BUR", "DIH", "Polska Wschodnia"],
     metric: "100%",
-    metricLabel: "Możliwego dofinansowania",
-    sub: "EU Funding Protocol",
+    metricLabel: "Dofinansowania UE",
+    experts: ["Philip Kotler", "Seth Godin", "Byron Sharp", "Peter Drucker"],
   },
   {
-    code: "02",
-    tag: "SKILL",
-    accent: { text: "text-cyan-neon", glow: "rgba(0,229,197,.55)", grad: "from-cyan-neon/40 via-cyan-neon/10 to-transparent" },
+    code: "02", tag: "SKILL",
+    color: "text-cyan-neon",
+    glow: "rgba(0,229,197,.55)",
+    accentBg: "bg-cyan-neon",
     title: "Tworzymy Operatorów, nie wyrobników.",
-    body:
-      "AI nie zabierze pracy Twoim ludziom. Zabierze ją firma, której ludzie potrafią obsługiwać AI. Twarde szkolenia z AI, PR i marketingu.",
+    body: "AI nie zabierze pracy Twoim ludziom. Zabierze ją firma, której pracownicy już to potrafią. 9 modułów. Certyfikacja. Narzędzia od pierwszego dnia.",
     chips: ["Prompt Eng.", "n8n", "Clay", "GA4", "Data Storytelling"],
     metric: "9",
     metricLabel: "Wymiarów rozwoju",
-    sub: "The Adaptation Protocol",
+    experts: ["Avinash Kaushik", "Bernard Marr", "Cole N. Knaflic", "Carol Dweck"],
   },
   {
-    code: "03",
-    tag: "GOLEM",
-    accent: { text: "text-electric-yellow", glow: "rgba(255,230,0,.55)", grad: "from-electric-yellow/40 via-electric-yellow/10 to-transparent" },
+    code: "03", tag: "GOLEM",
+    color: "text-electric-yellow",
+    glow: "rgba(255,230,0,.55)",
+    accentBg: "bg-electric-yellow",
     title: "Wdrażamy Konik RevOS.",
-    body:
-      "Kiedy umysły są gotowe, instalujemy maszynę. 66 Agentów AI 24/7 — generowanie leadów, cold mailing, zamykanie sprzedaży. Inżynieria z Konik Systems.",
+    body: "Kiedy zespół rozumie AI, dajemy mu armię. 66 Agentów pracuje na Twoją sprzedaż zanim handlowiec wstanie rano. Generowanie leadów, kwalifikacja, cold outreach — 24/7.",
     chips: ["66 Agentów AI", "180 Procesów", "RevOps", "Auto-Sales"],
     metric: "24/7",
     metricLabel: "Cyfrowa armia",
-    sub: "Konik RevOS",
+    experts: ["Neil Rackham", "Robert Cialdini", "Chris Voss", "Dan Ariely"],
   },
-];
+] as const;
+
+type Step = (typeof STEPS)[number];
 
 export default function ValueLadder() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  // 3 panels → translate the track from 0% to -66.66%
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.667%"]);
-  const progressBar = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  // Aktualna faza (0/1/2) — do dynamicznego HUD na dole
-  const [stage, setStage] = useState(0);
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    const next = p < 0.33 ? 0 : p < 0.66 ? 1 : 2;
-    setStage((cur) => (cur === next ? cur : next));
-  });
-  const STAGES = [
-    { label: "ETAP 01 — Pozyskujemy MANĘ", color: "text-magenta-neon" },
-    { label: "ETAP 02 — Trenujemy Operatorów", color: "text-cyan-neon" },
-    { label: "ETAP 03 — Wdrażamy Golema", color: "text-electric-yellow" },
-  ] as const;
+  const op1 = useTransform(scrollYProgress, [0, 0.12], [0, 1]);
+  const y1  = useTransform(scrollYProgress, [0, 0.12], [40, 0]);
+  const op2 = useTransform(scrollYProgress, [0.3, 0.42], [0, 1]);
+  const y2  = useTransform(scrollYProgress, [0.3, 0.42], [40, 0]);
+  const op3 = useTransform(scrollYProgress, [0.6, 0.72], [0, 1]);
+  const y3  = useTransform(scrollYProgress, [0.6, 0.72], [40, 0]);
+  const rail1Op = useTransform(scrollYProgress, [0.28, 0.4], [0, 1]);
+  const rail2Op = useTransform(scrollYProgress, [0.58, 0.7], [0, 1]);
 
   return (
-    <section id="alchemia" ref={ref} className="relative" style={{ height: "320vh" }}>
+    <section id="alchemia" ref={ref} className="relative" style={{ height: "350vh" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0 bg-cmyk opacity-70" aria-hidden />
         <div className="absolute inset-0 bg-grid-fine opacity-50" aria-hidden />
         <div className="scanlines" aria-hidden />
 
-        {/* ambient gradient that shifts with scroll */}
         <BackdropAura progress={scrollYProgress} />
 
-        {/* 3D smok (R3F) + nakładki MANA / SKILL / GOLEM */}
-        <DragonStage progress={scrollYProgress} />
+        {/* Header */}
+        <div className="absolute inset-x-0 top-0 z-20 mx-auto max-w-[1400px] px-6 lg:px-10 pt-16 lg:pt-20 pointer-events-none">
+          <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-cyan-neon">
+            [02] · Drabina Wartości
+          </div>
+          <h2 className="mt-3 font-display font-semibold tracking-tightest-2 text-[clamp(1.5rem,3vw,2.6rem)] leading-[0.98]">
+            <MaskReveal>Alchemia Biznesu.</MaskReveal>{" "}
+            <span className="text-bone-mute">
+              <MaskReveal delay={0.06}>3 szczeble. Jeden wynik.</MaskReveal>
+            </span>
+          </h2>
+        </div>
 
-        {/* Heading rail */}
-        <div className="absolute inset-x-0 top-0 z-10 mx-auto max-w-[1400px] px-6 lg:px-10 pt-16 lg:pt-20">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-cyan-neon">
-                [02] · Drabina Wartości
-              </div>
-              <h2 className="mt-3 font-display font-semibold tracking-tightest-2 text-[clamp(1.5rem,3.2vw,2.8rem)] leading-[0.98]">
-                <MaskReveal>Alchemia Biznesu.</MaskReveal>{" "}
-                <span className="text-bone-mute">
-                  <MaskReveal delay={0.06}>3 kroki do dominacji.</MaskReveal>
-                </span>
-              </h2>
+        {/* Staircase */}
+        <div className="absolute inset-x-0 bottom-0 pb-14 z-10">
+          <div
+            className="relative mx-auto max-w-[1400px] px-6 lg:px-10"
+            style={{ height: "68vh" }}
+          >
+            {/* Ladder rail 1 — between step 01 → 02 */}
+            <motion.div
+              style={{
+                opacity: rail1Op,
+                position: "absolute",
+                left: "calc(16% + 24px)",
+                bottom: 0,
+                width: "1px",
+                height: "34%",
+                background: "linear-gradient(to top, rgba(255,45,170,0.35), rgba(0,229,197,0.35))",
+                pointerEvents: "none",
+              }}
+            />
+            {/* Ladder rail 2 — between step 02 → 03 */}
+            <motion.div
+              style={{
+                opacity: rail2Op,
+                position: "absolute",
+                left: "calc(32% + 24px)",
+                bottom: "34%",
+                width: "1px",
+                height: "34%",
+                background: "linear-gradient(to top, rgba(0,229,197,0.35), rgba(255,230,0,0.35))",
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Step 01 — bottom, full width */}
+            <div className="absolute bottom-0 left-0 right-0">
+              <motion.div style={{ opacity: op1, y: y1 }}>
+                <StepCard step={STEPS[0]} />
+              </motion.div>
             </div>
-            <div className="hidden lg:flex items-center gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-bone-mute">scroll</span>
-              <div className="h-px w-24 bg-white/10 relative overflow-hidden">
-                <motion.div
-                  style={{ width: progressBar }}
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-magenta-neon via-cyan-neon to-electric-yellow"
-                />
-              </div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-bone-mute tabular-nums">01 · 02 · 03</span>
+
+            {/* Step 02 — middle, indented 16% */}
+            <div className="absolute right-0" style={{ bottom: "34%", left: "16%" }}>
+              <motion.div style={{ opacity: op2, y: y2 }}>
+                <StepCard step={STEPS[1]} />
+              </motion.div>
+            </div>
+
+            {/* Step 03 — top, indented 32% */}
+            <div className="absolute right-0" style={{ bottom: "68%", left: "32%" }}>
+              <motion.div style={{ opacity: op3, y: y3 }}>
+                <StepCard step={STEPS[2]} />
+              </motion.div>
             </div>
           </div>
         </div>
 
-        {/* Horizontal track */}
-        <motion.div
-          style={{ x }}
-          className="absolute inset-x-0 top-0 z-10 flex h-screen items-center will-change-transform"
-        >
-          {PILLARS.map((p, i) => (
-            <PillarPanel key={p.code} pillar={p} progress={scrollYProgress} index={i} />
-          ))}
-        </motion.div>
-
         {/* HUD bottom */}
-        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/5 bg-ink/40 backdrop-blur">
-          <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.28em] text-bone-mute">
+        <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/5 bg-ink/40 backdrop-blur">
+          <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.28em] text-bone-mute">
             <span>System: Active</span>
-            <span className={`hidden md:inline transition-colors duration-500 ${STAGES[stage].color}`}>
-              {STAGES[stage].label}
-            </span>
-            <span className={`flex items-center gap-2 transition-colors duration-500 ${STAGES[stage].color}`}>
-              <span className={`h-1.5 w-1.5 rounded-full animate-pulse ${
-                stage === 0 ? "bg-magenta-neon" : stage === 1 ? "bg-cyan-neon" : "bg-electric-yellow"
-              }`} />
-              Live · {(stage + 1).toString().padStart(2, "0")}/03
-            </span>
+            <span>Scroll ↓</span>
           </div>
         </div>
       </div>
@@ -135,440 +147,81 @@ export default function ValueLadder() {
   );
 }
 
-/* ─────────────────────────────────────────────── */
-/*  DRAGON STAGE — scroll-scrubbed webm + overlays   */
-/* ─────────────────────────────────────────────── */
-
-function DragonStage({ progress }: { progress: MotionValue<number> }) {
-  // Panel-active opacities — bramki dopasowane do granic paneli (0–0.33 / 0.33–0.66 / 0.66–1)
-  const manaActive = useTransform(progress, [0, 0.05, 0.30, 0.40], [0, 1, 1, 0]);
-  const skillActive = useTransform(progress, [0.30, 0.40, 0.63, 0.73], [0, 1, 1, 0]);
-  const golemActive = useTransform(progress, [0.63, 0.73, 0.97, 1], [0, 1, 1, 0]);
-
-  // Subtle parallax — dragon drifts right as scroll progresses
-  const dragonX = useTransform(progress, [0, 1], ["0%", "-6%"]);
-  const dragonScale = useTransform(progress, [0, 0.5, 1], [1, 1.06, 1.12]);
-
+function StepCard({ step }: { step: Step }) {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-      <motion.div
-        className="absolute inset-y-0 right-0 left-[40%] lg:left-[52%]"
-        style={{
-          x: dragonX,
-          scale: dragonScale,
-          // miękka „latarnia" wokół smoka — fade do czerni przy każdej krawędzi
-          WebkitMaskImage: "radial-gradient(ellipse 78% 72% at 58% 50%, #000 32%, transparent 88%)",
-          maskImage: "radial-gradient(ellipse 78% 72% at 58% 50%, #000 32%, transparent 88%)",
-        }}
-      >
-        <DragonScrubCanvas progress={progress} />
-      </motion.div>
-
-      {/* MANA overlay — cyan armor glow + Euro particles */}
-      <motion.div style={{ opacity: manaActive }} className="absolute inset-0">
-        <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_60%_50%,rgba(0,229,197,0.32),transparent_70%)]" />
-        <EuroDust />
-      </motion.div>
-
-      {/* SKILL overlay — binary stream ambient (skrzydło teraz w smoku SVG) */}
-      <motion.div style={{ opacity: skillActive }} className="absolute inset-0 overflow-hidden">
-        <BinaryStream />
-        <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_55%_45%,rgba(255,45,170,0.28),transparent_70%)] mix-blend-screen" />
-      </motion.div>
-
-      {/* GOLEM overlay — żółta aura */}
-      <motion.div style={{ opacity: golemActive }} className="absolute inset-0">
-        <div className="absolute inset-y-0 right-0 w-[50%] bg-[radial-gradient(60%_60%_at_60%_50%,rgba(255,230,0,0.30),transparent_70%)]" />
-      </motion.div>
-    </div>
-  );
-}
-
-/* Scroll-scrubbed dragon — odtwarzacz SEKWENCJI KLATEK na <canvas> (Neon Ascension).
-   Klatki wczytane z góry jako obrazki; drawImage przy scrollu = brak dekodowania,
-   masłowo gładki scrub (technika scroll-animacji Apple). Zastępuje wideo-scrub. */
-const LADDER_FRAMES = 150;
-function pad3(n: number) { return String(n).padStart(3, "0"); }
-
-function DragonScrubCanvas({ progress }: { progress: MotionValue<number> }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgsRef = useRef<HTMLImageElement[]>([]);
-  const targetRef = useRef(0);
-  const curRef = useRef(0);
-  const drawnRef = useRef(-1);
-  const rafRef = useRef<number | null>(null);
-
-  // preload wszystkich klatek
-  useEffect(() => {
-    const imgs: HTMLImageElement[] = [];
-    for (let i = 1; i <= LADDER_FRAMES; i++) {
-      const img = new Image();
-      img.decoding = "async";
-      img.src = `/smok_ladder_seq/f_${pad3(i)}.webp`;
-      imgs.push(img);
-    }
-    imgsRef.current = imgs;
-    return () => { imgsRef.current = []; };
-  }, []);
-
-  // progress (0..1) -> docelowa klatka
-  useEffect(() => {
-    const unsub = progress.on("change", (v) => {
-      targetRef.current = Math.max(0, Math.min(1, v));
-    });
-    return unsub;
-  }, [progress]);
-
-  // pętla rysująca z wygładzeniem
-  useEffect(() => {
-    const draw = () => {
-      const canvas = canvasRef.current;
-      const imgs = imgsRef.current;
-      if (canvas && imgs.length) {
-        curRef.current += (targetRef.current - curRef.current) * 0.16;
-        const idx = Math.min(LADDER_FRAMES - 1, Math.max(0, Math.round(curRef.current * (LADDER_FRAMES - 1))));
-        let img = imgs[idx];
-        if (!(img && img.complete && img.naturalWidth)) {
-          // jeśli docelowa klatka jeszcze się ładuje, znajdź najbliższą gotową
-          for (let d = 1; d < LADDER_FRAMES; d++) {
-            const a = imgs[idx - d], b = imgs[idx + d];
-            if (a && a.complete && a.naturalWidth) { img = a; break; }
-            if (b && b.complete && b.naturalWidth) { img = b; break; }
-          }
-        }
-        if (img && img.complete && img.naturalWidth && drawnRef.current !== idx) {
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            const rect = canvas.getBoundingClientRect();
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            const w = Math.max(1, Math.round(rect.width * dpr));
-            const h = Math.max(1, Math.round(rect.height * dpr));
-            if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const ir = img.naturalWidth / img.naturalHeight;
-            const cr = canvas.width / canvas.height;
-            let dw, dh;
-            if (ir > cr) { dw = canvas.width; dh = dw / ir; } else { dh = canvas.height; dw = dh * ir; }
-            ctx.drawImage(img, (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
-            drawnRef.current = idx;
-          }
-        }
-      }
-      rafRef.current = requestAnimationFrame(draw);
-    };
-    rafRef.current = requestAnimationFrame(draw);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, []);
-
-  return (
-    <div className="absolute inset-0 grid place-items-center">
-      <canvas ref={canvasRef} className="h-[80%] w-full will-change-transform" style={{ display: "block" }} />
-    </div>
-  );
-}
-
-function EuroDust() {
-  // 14 tiny € floating upward with random delays
-  // cyfrowy pył z okolic głowy smoka → turkusowe € (Karta 1 / Mana)
-  const items = Array.from({ length: 22 });
-  return (
-    <div className="absolute right-[20%] lg:right-[26%] top-[16%] h-[52%] w-[26%]">
-      {items.map((_, i) => {
-        const left = 8 + ((i * 47) % 84);
-        const delay = (i * 0.32) % 3.2;
-        const dur = 2.8 + ((i * 0.6) % 2.2);
-        const size = 16 + ((i * 7) % 16);
-        return (
-          <motion.span
-            key={i}
-            className="absolute font-mono font-semibold text-cyan-neon"
-            style={{ left: `${left}%`, bottom: "0%", fontSize: `${size}px`, textShadow: "0 0 14px rgba(0,229,197,1), 0 0 26px rgba(0,229,197,.7)" }}
-            initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: [0, 1, 1, 0], y: [0, -120, -240, -360], scale: [0.4, 1, 1, 0.9] }}
-            transition={{ duration: dur, repeat: Infinity, delay, ease: "easeOut" }}
-          >
-            €
-          </motion.span>
-        );
-      })}
-    </div>
-  );
-}
-
-function BinaryStream() {
-  // Ciągi danych przewijające się po obszarze skrzydła (Karta 2 / Skill)
-  const cols = Array.from({ length: 9 });
-  return (
-    <div className="absolute right-[8%] lg:right-[12%] top-[14%] h-[60%] flex gap-3 lg:gap-4 items-stretch w-[34%] lg:w-[30%] overflow-hidden">
-      {cols.map((_, i) => (
-        <motion.div
-          key={i}
-          className="font-mono text-[14px] lg:text-[15px] leading-tight tabular-nums whitespace-pre overflow-hidden h-full font-medium"
-          style={{
-            color: i % 2 ? "#00E5C5" : "#FF2DAA",
-            opacity: 0.9,
-            textShadow: i % 2 ? "0 0 8px rgba(0,229,197,.9)" : "0 0 8px rgba(255,45,170,.9)",
-          }}
-          animate={{ y: ["-30%", "0%"] }}
-          transition={{ duration: 3 + (i % 3), repeat: Infinity, ease: "linear", delay: i * 0.3 }}
-        >
-          {generateBinary((i % 3) + 1)}
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-function generateBinary(seed: number) {
-  let s = "";
-  const chars = "01";
-  for (let i = 0; i < 120; i++) {
-    s += chars[(i * (seed + 3)) % 2] + "\n";
-  }
-  return s;
-}
-
-function Gears() {
-  // "Wnętrze zbroi" w fazie GOLEM — ciemna wnęka + płynnie obracające się zębatki nad piersią
-  return (
-    <div className="absolute right-[15%] lg:right-[20%] top-[46%] -translate-y-1/2 pointer-events-none">
+    <div className="relative flex items-stretch border border-white/[0.07] bg-ink/80 backdrop-blur-md rounded-xl overflow-hidden">
+      {/* Left accent stripe */}
       <div
-        className="absolute left-1/2 top-1/2 h-[240px] w-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(255,230,0,0.18) 0%, rgba(10,8,2,0.88) 40%, rgba(5,5,5,0.94) 58%, transparent 72%)",
-          boxShadow: "inset 0 0 70px rgba(0,0,0,0.95), 0 0 55px rgba(255,230,0,0.28)",
-        }}
+        className={`w-[3px] shrink-0 ${step.accentBg}`}
+        style={{ boxShadow: `0 0 16px ${step.glow}` }}
       />
-      <div className="relative h-[180px] w-[180px]">
-        <motion.div
-          className="absolute left-0 top-0"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-        >
-          <GearSVG size={84} stroke="#FFE600" />
-        </motion.div>
-        <motion.div
-          className="absolute right-0 top-[58px]"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
-        >
-          <GearSVG size={60} stroke="#FF2DAA" />
-        </motion.div>
-        <motion.div
-          className="absolute left-[20px] bottom-0"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 11, repeat: Infinity, ease: "linear" }}
-        >
-          <GearSVG size={70} stroke="#00E5C5" />
-        </motion.div>
+
+      <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-0 px-5 py-5 w-full">
+        {/* Metric */}
+        <div className="shrink-0 lg:w-40">
+          <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-bone-mute">
+            [{step.code}] · {step.tag}
+          </div>
+          <div
+            className={`mt-0.5 font-display font-semibold text-[clamp(2rem,3.4vw,2.8rem)] leading-[0.88] ${step.color}`}
+            style={{ textShadow: `0 0 28px ${step.glow}` }}
+          >
+            {step.metric}
+          </div>
+          <div className="mt-0.5 font-mono text-[8.5px] uppercase tracking-[0.22em] text-bone-mute">
+            {step.metricLabel}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="hidden lg:block h-14 w-px bg-white/8 mx-6 shrink-0" />
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-display text-[clamp(1rem,1.8vw,1.45rem)] font-semibold tracking-tightest-2 leading-[1.1]">
+            {step.title}
+          </h3>
+          <p className="mt-1.5 text-[12.5px] leading-relaxed text-bone-mute line-clamp-2">
+            {step.body}
+          </p>
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
+            {step.chips.map((c) => (
+              <span
+                key={c}
+                className={`font-mono text-[8.5px] uppercase tracking-[0.14em] px-2.5 py-1 rounded hairline-strong bg-ink/50 ${step.color}`}
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Experts */}
+        <div className="hidden xl:flex flex-col gap-0.5 shrink-0 ml-6 pl-6 border-l border-white/[0.07]">
+          <div className="font-mono text-[8px] uppercase tracking-[0.26em] text-bone-mute mb-1.5">
+            Inspired by
+          </div>
+          {step.experts.map((e) => (
+            <div key={e} className="font-mono text-[9px] text-bone/40 tracking-[0.1em]">
+              ↳ {e}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  );
-}
-
-function GearSVG({ size = 100, stroke = "#FFE600" }: { size?: number; stroke?: string }) {
-  const teeth = 14;
-  const r = 38;
-  const tooth = 6;
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" style={{ filter: `drop-shadow(0 0 10px ${stroke})` }}>
-      <g fill="none" stroke={stroke} strokeWidth="2">
-        <circle cx="50" cy="50" r={r} />
-        <circle cx="50" cy="50" r={r - 14} />
-        <circle cx="50" cy="50" r="6" />
-        {Array.from({ length: teeth }).map((_, i) => {
-          const a = (i / teeth) * Math.PI * 2;
-          const x1 = 50 + Math.cos(a) * r;
-          const y1 = 50 + Math.sin(a) * r;
-          const x2 = 50 + Math.cos(a) * (r + tooth);
-          const y2 = 50 + Math.sin(a) * (r + tooth);
-          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />;
-        })}
-      </g>
-    </svg>
-  );
-}
-
-function WingFan({ progress }: { progress: MotionValue<number> }) {
-  // Geometryczne skrzydło — 9 piór wyrastających od punktu kotwicy przy łopatce smoka,
-  // wachlarz UP/LEFT (smok stoi po prawej, skrzydło rozkłada się w lewo-góra).
-  // Bez mix-blend — pełne saturacje cyan/magenta.
-  const spread = useTransform(progress, [0.30, 0.44, 0.63, 0.73], [0, 1, 1, 0]);
-  const feathers = Array.from({ length: 9 });
-  return (
-    <motion.div
-      className="absolute pointer-events-none"
-      style={{
-        opacity: spread,
-        // anchor: środek-prawa strona ekranu (~65% width, 45% height) — przy łopatce smoka,
-        // który siedzi po prawej w canvas
-        right: "32%",
-        top: "32%",
-      }}
-      aria-hidden
-    >
-      <div className="relative" style={{ width: 0, height: 0 }}>
-        {feathers.map((_, i) => {
-          // Wachlarz w lewo i w górę — od 130° (lewa-góra) do 220° (lewa-dół)
-          const angleDeg = 130 + (i * 90) / (feathers.length - 1);
-          const len = 220 + (i === 4 ? 60 : i % 2 === 0 ? 30 : 0);
-          const color = i % 2 ? "#00E5C5" : "#FF2DAA";
-          return (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                left: 0,
-                top: 0,
-                transformOrigin: "0% 50%",
-                rotate: `${angleDeg}deg`,
-              }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: [0.5, 1, 0.9, 1] }}
-              transition={{ duration: 2.0, repeat: Infinity, delay: i * 0.07, ease: "easeInOut" }}
-            >
-              <svg
-                width={len}
-                height={32}
-                viewBox={`0 0 ${len} 32`}
-                style={{ filter: `drop-shadow(0 0 14px ${color}) drop-shadow(0 0 6px ${color})`, display: "block" }}
-              >
-                {/* pióro: lance shape z wewnętrznymi liniami danych */}
-                <polygon
-                  points={`0,16 ${len * 0.85},5 ${len},16 ${len * 0.85},27`}
-                  fill={color}
-                  fillOpacity="0.18"
-                  stroke={color}
-                  strokeWidth="1.6"
-                />
-                <line x1="6" y1="16" x2={len - 12} y2="10" stroke={color} strokeWidth="0.8" opacity="0.7" />
-                <line x1="6" y1="16" x2={len - 12} y2="22" stroke={color} strokeWidth="0.8" opacity="0.7" />
-                {/* binarne znaczniki wzdłuż pióra */}
-                {Array.from({ length: 4 }).map((_, k) => {
-                  const x = 30 + k * (len / 5);
-                  return (
-                    <text
-                      key={k}
-                      x={x}
-                      y="20"
-                      fontFamily="monospace"
-                      fontSize="9"
-                      fill={color}
-                      opacity="0.85"
-                    >
-                      {k % 2 === 0 ? "01" : "10"}
-                    </text>
-                  );
-                })}
-              </svg>
-            </motion.div>
-          );
-        })}
-        {/* kotwica — świetlisty rdzeń przy łopatce */}
-        <motion.div
-          className="absolute h-4 w-4 rounded-full"
-          style={{
-            left: -8,
-            top: -8,
-            background: "radial-gradient(circle, #fff 0%, #FF2DAA 50%, rgba(255,45,170,0.6) 75%, transparent 100%)",
-            boxShadow: "0 0 30px rgba(255,45,170,1), 0 0 60px rgba(255,45,170,0.6)",
-          }}
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-    </motion.div>
   );
 }
 
 function BackdropAura({ progress }: { progress: MotionValue<number> }) {
   const left = useTransform(progress, [0, 0.5, 1], ["10%", "50%", "90%"]);
-  const opacityM = useTransform(progress, [0, 0.33, 0.5], [0.5, 0.2, 0]);
-  const opacityC = useTransform(progress, [0.16, 0.5, 0.83], [0, 0.5, 0]);
-  const opacityY = useTransform(progress, [0.5, 0.66, 1], [0, 0.2, 0.5]);
-
+  const oM = useTransform(progress, [0, 0.33, 0.5], [0.45, 0.15, 0]);
+  const oC = useTransform(progress, [0.16, 0.5, 0.83], [0, 0.45, 0]);
+  const oY = useTransform(progress, [0.5, 0.66, 1], [0, 0.15, 0.45]);
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-magenta-neon/30 blur-[140px]"
-        style={{ left, opacity: opacityM }}
-      />
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-cyan-neon/30 blur-[140px]"
-        style={{ left, opacity: opacityC }}
-      />
-      <motion.div
-        className="absolute top-1/2 -translate-y-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-electric-yellow/25 blur-[140px]"
-        style={{ left, opacity: opacityY }}
-      />
-    </div>
-  );
-}
-
-function PillarPanel({
-  pillar, progress, index,
-}: { pillar: typeof PILLARS[number]; progress: MotionValue<number>; index: number }) {
-  // Each panel: in-range from (i/3 - 0.1) to ((i+1)/3 + 0.1)
-  const start = index / PILLARS.length;
-  const end = (index + 1) / PILLARS.length;
-  const localOpacity = useTransform(progress, [start - 0.05, start + 0.05, end - 0.05, end + 0.05], [0.78, 1, 1, 0.78]);
-  const localScale = useTransform(progress, [start, (start + end) / 2, end], [0.97, 1, 0.97]);
-  const localY = useTransform(progress, [start, (start + end) / 2, end], [20, 0, -20]);
-
-  return (
-    <div className="relative w-screen h-screen shrink-0 grid items-center px-6 lg:px-12">
-      <motion.div
-        style={{ opacity: localOpacity, scale: localScale, y: localY }}
-        className="relative z-10 w-full max-w-[520px] lg:ml-[6%]"
-      >
-        {/* Tag + metric */}
-        <div className="relative">
-          <div className={`font-mono text-[11px] uppercase tracking-[0.34em] ${pillar.accent.text}`}>
-            [{pillar.code}] · {pillar.tag}
-          </div>
-          <div
-            className={`mt-3 font-display font-semibold tracking-tightest-2 leading-[0.9] text-[clamp(3rem,7vw,6rem)] ${pillar.accent.text}`}
-            style={{ textShadow: `0 0 40px ${pillar.accent.glow}` }}
-          >
-            {pillar.metric}
-          </div>
-          <div className="mt-5 lg:mt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-bone-mute">
-            {pillar.metricLabel} · {pillar.sub}
-          </div>
-        </div>
-
-        {/* Body — no blur, no card frame; just text on top of the stage */}
-        <div className="relative mt-10 lg:mt-12">
-          <h3 className="font-display text-[clamp(1.7rem,3.2vw,2.8rem)] font-semibold tracking-tightest-2 leading-[1.04] text-balance">
-            {pillar.title}
-          </h3>
-          <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-bone-mute">
-            {pillar.body}
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {pillar.chips.map((c, ci) => (
-              <motion.span
-                key={c}
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-10% 0px" }}
-                transition={{ delay: ci * 0.05, type: "spring", stiffness: 140, damping: 18 }}
-                className={`font-mono text-[10px] uppercase tracking-[0.18em] px-3 py-1.5 rounded-md hairline-strong bg-ink/60 backdrop-blur ${pillar.accent.text}`}
-              >
-                {c}
-              </motion.span>
-            ))}
-          </div>
-
-        </div>
-      </motion.div>
-
-      {/* Edge index */}
-      <div className="absolute left-4 lg:left-6 top-1/2 -translate-y-1/2 -rotate-90 origin-left font-mono text-[9px] uppercase tracking-[0.4em] text-bone/30">
-        {String(index + 1).padStart(2, "0")} / 03 · {pillar.tag}
-      </div>
+      <motion.div className="absolute top-1/2 -translate-y-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-magenta-neon/25 blur-[120px]" style={{ left, opacity: oM }} />
+      <motion.div className="absolute top-1/2 -translate-y-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-neon/25 blur-[120px]" style={{ left, opacity: oC }} />
+      <motion.div className="absolute top-1/2 -translate-y-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-electric-yellow/20 blur-[120px]" style={{ left, opacity: oY }} />
     </div>
   );
 }

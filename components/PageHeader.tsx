@@ -1,15 +1,12 @@
 "use client";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
   useReducedMotion,
 } from "framer-motion";
 import { Reveal, MaskReveal } from "./Reveal";
-import DragonMark from "./DragonMark";
 
 export default function PageHeader({
   index,
@@ -37,33 +34,8 @@ export default function PageHeader({
     target: ref,
     offset: ["start start", "end start"],
   });
-  // Scroll-driven cinematic exit (same language as homepage hero)
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.25]);
-  const dragonY = useTransform(scrollYProgress, [0, 1], [0, -110]);
-  const dragonRotate = useTransform(scrollYProgress, [0, 1], [0, 16]);
-  const dragonScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-
-  // Mouse parallax on the dragon
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const smx = useSpring(mx, { stiffness: 55, damping: 18, mass: 0.6 });
-  const smy = useSpring(my, { stiffness: 55, damping: 18, mass: 0.6 });
-  const dragonX = useTransform(smx, (v) => v * 26);
-  const dragonShiftY = useTransform(smy, (v) => v * 18);
-
-  useEffect(() => {
-    if (reduced) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set(e.clientX / window.innerWidth - 0.5);
-      my.set(e.clientY / window.innerHeight - 0.5);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [mx, my, reduced]);
-
-  const glowRGB =
-    glow === "cyan" ? "0,229,197" : glow === "yellow" ? "255,230,0" : "255,45,170";
 
   return (
     <header
@@ -75,34 +47,6 @@ export default function PageHeader({
       <div className="scanlines" aria-hidden />
       {/* travelling scan */}
       <div className="absolute inset-x-0 -top-32 h-32 bg-gradient-to-b from-transparent via-cyan-neon/12 to-transparent animate-scan pointer-events-none" />
-
-      {/* Dragon signature — parallax + scroll, masked so it never fights the copy */}
-      <motion.div
-        aria-hidden
-        style={{ x: dragonX, y: dragonShiftY }}
-        className="pointer-events-none absolute right-[-14%] sm:right-[-8%] top-1/2 -translate-y-1/2 w-[70%] sm:w-[54%] max-w-[680px] will-change-transform"
-      >
-        <motion.div
-          style={{ y: dragonY, rotate: dragonRotate, scale: dragonScale }}
-          className="relative"
-        >
-          <div
-            className="absolute inset-[12%] rounded-full blur-[110px] animate-breathe"
-            style={{ background: `rgba(${glowRGB},0.20)` }}
-          />
-          <div
-            className="opacity-[0.22] sm:opacity-[0.3]"
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(90deg, transparent 0%, #000 38%, #000 100%)",
-              maskImage:
-                "linear-gradient(90deg, transparent 0%, #000 38%, #000 100%)",
-            }}
-          >
-            <DragonMark className="h-full w-full" glow={false} />
-          </div>
-        </motion.div>
-      </motion.div>
 
       <motion.div
         style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}

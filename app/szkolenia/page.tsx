@@ -2,7 +2,6 @@ import PageHeader from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import Spotlight from "@/components/Spotlight";
 import Magnetic from "@/components/Magnetic";
-import AcademyDragon from "@/components/sections/AcademyDragon";
 import FinalGate from "@/components/sections/FinalGate";
 import Link from "next/link";
 
@@ -96,9 +95,6 @@ export default function SzkoleniaPage() {
           </Reveal>
         </div>
       </section>
-
-      {/* Scroll-scrubbed dragon — The Academy Matrix (homepage-grade motion) */}
-      <AcademyDragon />
 
       {/* Department Matrix */}
       <section className="relative py-20 lg:py-28">
