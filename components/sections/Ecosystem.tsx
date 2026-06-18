@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
+import Logo from "@/components/Logo";
 
 const NODES = [
   {
@@ -56,14 +57,17 @@ export default function Ecosystem() {
 
                 {/* Logo */}
                 <div className="h-20 flex items-center">
-                  <Image
-                    src={n.logo}
-                    alt={n.name}
-                    width={240}
-                    height={80}
-                    className="object-contain object-left max-h-20 w-auto"
-                    style={n.current ? { mixBlendMode: "screen" } : undefined}
-                  />
+                  {n.current ? (
+                    <Logo size={160} />
+                  ) : (
+                    <Image
+                      src={n.logo}
+                      alt={n.name}
+                      width={240}
+                      height={80}
+                      className="object-contain object-left max-h-20 w-auto"
+                    />
+                  )}
                 </div>
 
                 <div>
