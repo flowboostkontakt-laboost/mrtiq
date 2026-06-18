@@ -55,13 +55,14 @@ export default function Ecosystem() {
                 )}
 
                 {/* Logo */}
-                <div className="h-12 flex items-center">
+                <div className="h-20 flex items-center">
                   <Image
                     src={n.logo}
                     alt={n.name}
-                    width={120}
-                    height={48}
-                    className="object-contain object-left max-h-10 w-auto rounded"
+                    width={240}
+                    height={80}
+                    className="object-contain object-left max-h-20 w-auto"
+                    style={n.current ? { mixBlendMode: "screen" } : undefined}
                   />
                 </div>
 
