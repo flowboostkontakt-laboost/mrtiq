@@ -1,10 +1,24 @@
 "use client";
+import Image from "next/image";
 import { Reveal } from "@/components/Reveal";
 
 const NODES = [
-  { code: "X", name: "Xpunkt", role: "Sieć lokalnych partnerów biznesowych", color: "text-cyan-neon", bg: "bg-cyan-neon/10" },
-  { code: "M", name: "mrtiq", role: "Strategia · Kapitał · Edukacja", color: "text-magenta-neon", bg: "bg-magenta-neon/10", current: true },
-  { code: "K", name: "Konik Systems", role: "Inżynieria · RevOS", color: "text-electric-yellow", bg: "bg-electric-yellow/10" },
+  {
+    code: "X", name: "Xpunkt", role: "Sieć lokalnych partnerów biznesowych",
+    color: "text-cyan-neon", border: "border-cyan-neon/20", bg: "bg-cyan-neon/[0.04]",
+    logo: "/logo-xpunkt.webp",
+  },
+  {
+    code: "M", name: "mrtiq", role: "Strategia · Kapitał · Edukacja",
+    color: "text-magenta-neon", border: "border-magenta-neon/50", bg: "bg-magenta-neon/[0.05]",
+    logo: "/logo-mrtiq.jpg",
+    current: true,
+  },
+  {
+    code: "K", name: "Konik Systems", role: "Inżynieria · RevOS · Agenci AI",
+    color: "text-electric-yellow", border: "border-electric-yellow/20", bg: "bg-electric-yellow/[0.04]",
+    logo: "/logo-konik.png",
+  },
 ];
 
 export default function Ecosystem() {
@@ -28,22 +42,34 @@ export default function Ecosystem() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {NODES.map((n) => (
               <div
                 key={n.code}
-                className={`relative rounded-2xl border ${n.current ? "border-magenta-neon/50 neon-magenta" : "border-white/[0.06]"} ${n.bg} backdrop-blur p-6`}
+                className={`relative rounded-2xl border ${n.border} ${n.bg} backdrop-blur p-6 flex flex-col gap-4 ${n.current ? "ring-1 ring-magenta-neon/20" : ""}`}
               >
-                <div className="flex items-start justify-between">
-                  <div className={`grid h-10 w-10 place-items-center rounded-lg ${n.bg} ${n.color} font-display font-semibold`}>
-                    {n.code}
-                  </div>
-                  {n.current && (
-                    <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-magenta-neon">You are here</span>
-                  )}
+                {n.current && (
+                  <span className="absolute top-4 right-4 font-mono text-[9px] uppercase tracking-[0.28em] text-magenta-neon">
+                    You are here
+                  </span>
+                )}
+
+                {/* Logo */}
+                <div className="h-12 flex items-center">
+                  <Image
+                    src={n.logo}
+                    alt={n.name}
+                    width={120}
+                    height={48}
+                    className="object-contain object-left max-h-10 w-auto"
+                    style={{ filter: "brightness(0) invert(1)" }}
+                  />
                 </div>
-                <div className="mt-6 font-display text-xl font-medium">{n.name}</div>
-                <div className={`mt-1 text-sm ${n.current ? "text-bone-mute" : "text-bone-mute"}`}>{n.role}</div>
+
+                <div>
+                  <div className="font-display text-xl font-medium">{n.name}</div>
+                  <div className={`mt-1 text-sm ${n.color}`}>{n.role}</div>
+                </div>
               </div>
             ))}
           </div>
