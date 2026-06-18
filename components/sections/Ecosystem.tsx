@@ -61,8 +61,7 @@ export default function Ecosystem() {
                     alt={n.name}
                     width={120}
                     height={48}
-                    className="object-contain object-left max-h-10 w-auto"
-                    style={{ filter: "brightness(0) invert(1)" }}
+                    className="object-contain object-left max-h-10 w-auto rounded"
                   />
                 </div>
 
