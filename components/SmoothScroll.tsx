@@ -16,6 +16,10 @@ export default function SmoothScroll() {
       lerp: 0.085,
     });
 
+    lenis.on("scroll", () => {
+      window.dispatchEvent(new Event("scroll", { bubbles: false }));
+    });
+
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);
