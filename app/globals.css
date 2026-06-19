@@ -15,6 +15,7 @@
 @layer base {
   html {
     overflow-y: scroll;
+    scroll-behavior: smooth;
   }
 
   html, body {
