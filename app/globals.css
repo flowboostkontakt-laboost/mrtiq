@@ -13,11 +13,6 @@
 }
 
 @layer base {
-  html {
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-  }
-
   html, body {
     background: #050505;
     color: #f5f5f7;

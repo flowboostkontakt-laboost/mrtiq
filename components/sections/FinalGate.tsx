@@ -27,10 +27,12 @@ export default function FinalGate() {
             <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-electric-yellow">
               [06] Protokół Transformacji · Inicjacja
             </div>
-            <h2 className="mt-5 font-display font-semibold tracking-tightest-2 text-[clamp(2.7rem,6vw,5.5rem)] leading-[1.05]">
-              <span className="block">Ile UE</span>
-              <span className="block text-electric-yellow" style={{ textShadow: "0 0 40px rgba(255,230,0,.6)" }}>zapłaci</span>
-              <span className="block text-bone-mute">za Twoją transformację?</span>
+            <h2 className="mt-5 font-display font-semibold tracking-tightest-2 text-[clamp(2.7rem,6vw,5.5rem)] leading-[0.94]">
+              <MaskReveal>Ile UE</MaskReveal>{" "}
+              <MaskReveal delay={0.05}>
+                <span className="text-glow-yellow text-electric-yellow">zapłaci</span>
+              </MaskReveal>{" "}
+              <MaskReveal delay={0.1}>za Twoją transformację?</MaskReveal>
             </h2>
             <p className="mt-6 text-[15.5px] leading-relaxed text-bone-mute">
               Zostaw NIP. W 48 godzin dostaniesz konkretną mapę: ile złotych
