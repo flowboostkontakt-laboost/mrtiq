@@ -21,6 +21,22 @@ const Q = [
     q: "Czy szkolenie z AI nie sprawi, że pracownicy poczują się zagrożeni?",
     a: "Wręcz przeciwnie. Pokazujemy ludziom, że AI nie jest ich następcą — jest ich cyfrowym egzoszkieletem. Pracę straci ten, kto AI nie używa.",
   },
+  {
+    q: "Dla kogo jest program Train the Trainer?",
+    a: "Dla doświadczonych specjalistów — marketerów, trenerów, konsultantów — którzy chcą samodzielnie prowadzić szkolenia z AI dla firm. Certyfikujesz się u nas, wdrażasz we własnych klientach i zarabiasz na tym 69–240 zł/h.",
+  },
+  {
+    q: "Czy mogę dostać dofinansowanie na szkolenie dla całego zespołu?",
+    a: "Tak. KFS (Krajowy Fundusz Szkoleniowy) pokrywa do 100% kosztów szkoleń dla pracowników — wniosek składa pracodawca, my pomagamy go przygotować. PARP i BUR to osobne ścieżki z limitem do 100 000 zł na firmę rocznie.",
+  },
+  {
+    q: "Czy działa to tylko dla dużych firm?",
+    a: "Nie. Większość naszych klientów to MŚP: 10–120 pracowników. Programy UE są wręcz zaprojektowane pod małe i średnie firmy — duże korporacje mają osobne ścieżki i mniejsze progi wsparcia.",
+  },
+  {
+    q: "Co konkretnie robi Konik RevOS przez 24/7?",
+    a: "66 wyspecjalizowanych agentów AI obsługuje prospecting B2B, cold outreach, kwalifikację leadów, generowanie ofert i raportowanie pipeline'u. Handlowiec rano dostaje listę gotowych do rozmowy kontaktów — zamiast tracić 3 godziny na research.",
+  },
 ];
 
 export default function FAQTeaser() {
